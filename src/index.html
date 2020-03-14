@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World! ver0.0.7</title>
+</head>
+
+<body>
+  <h1>Hello World! <span id="id-app-version"></span></h1>
+  We are using Node.js <span id="node-version"></span>,
+  Chromium <span id="chrome-version"></span>,
+  and Electron <span id="electron-version"></span>.
+
+  Current version: <span id="version">vX.Y.Z</span>
+  <div id="messages"></div>
+  <script>
+    // Display the current version
+    let version = window.location.hash.substring(1);
+    document.getElementById('version').innerText = version;
+
+    // Listen for messages
+    const { ipcRenderer } = require('electron');
+    ipcRenderer.on('onAppVersion', function (event, version) {
+      document.getElementById('id-app-version').innerHTML = version;
+    });
+
+    ipcRenderer.on('message', function (event, text) {
+      console.log(text);
+      var container = document.getElementById('messages');
+      var message = document.createElement('div');
+      message.innerHTML = text;
+      container.appendChild(message);
+    })
+  </script>
+</body>
+
+</html>

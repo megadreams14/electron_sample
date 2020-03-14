@@ -1,0 +1,76 @@
+{
+  "name": "electron_sample",
+  "productName": "Electronサンプル",
+  "version": "0.0.1",
+  "description": "",
+  "releaseName": "",
+  "releaseNotes": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/megadreams14/electron_sample.git"
+  },
+  "scripts": {
+    "clean": "rm -rf ./build && rm -rf ./dist",
+    "build:dev": "NODE_ENV='development' webpack --config webpack.config.js",
+    "build:prod": "NODE_ENV='production' webpack --config webpack.config.js",
+    "start": "yarn build:dev && electron ./dist/main.js",
+    "start:prod": "yarn build:prod && electron ./dist/main.js",
+    "package:dev": "yarn build:dev && electron-builder build --win --x64 --publish never",
+    "package:prod": "yarn build:dev && electron-builder build --win --x64 --publish never",
+    "deploy": "yarn build:prod && electron-builder build --win --x64 --publish always"
+  },
+  "build": {
+    "appId": "electron.sample",
+    "copyright": "Copyright © year ${author}",
+    "asar": true,
+    "asarUnpack": [
+      "./dist/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "icons/icon.ico",
+      "publish": {
+        "provider": "github",
+        "token": ""
+      }
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "icons/icon.icns"
+    },
+    "extends": null,
+    "files": [
+      "./dist/**/*",
+      "./icons/**/*"
+    ],
+    "directories": {
+      "output": "./build",
+      "buildResources": "./dist"
+    }
+  },
+  "author": "megadreams14",
+  "license": "MIT",
+  "main": "dist/main.js",
+  "dependencies": {
+    "electron-log": "^4.1.0",
+    "electron-updater": "^4.2.5"
+  },
+  "devDependencies": {
+    "@types/moment": "^2.13.0",
+    "@types/node": "12.12.6",
+    "@types/webpack": "^4.41.7",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "electron": "^8.1.1",
+    "electron-builder": "^22.4.1",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
